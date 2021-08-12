@@ -21,9 +21,6 @@ public class NoteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentNoteBinding.inflate(inflater, container, false);
-        binding.jfasdj.setOnClickListener(v -> {
-
-        });
 
         return binding.getRoot();
     }
