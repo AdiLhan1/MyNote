@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.geektech.mynote.R;
 import com.geektech.mynote.databinding.NoteItemBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -16,13 +15,19 @@ import java.util.ArrayList;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> {
     ArrayList<String> list = new ArrayList<>();
+    NoteItemBinding binding;
+
+    public void addText(String text) {
+        list.add(text);
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @NotNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item, parent, false);
-        return new MyViewHolder(view);
+        binding = NoteItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new MyViewHolder(binding.getRoot());
     }
 
     @Override
@@ -42,7 +47,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> 
         }
 
         private void onBind(String s) {
-
+            binding.itemTitle.setText(s);
         }
     }
 }
