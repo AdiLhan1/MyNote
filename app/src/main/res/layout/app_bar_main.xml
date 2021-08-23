@@ -15,13 +15,17 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/dark"
             app:popupTheme="@style/Theme.MyNote.PopupOverlay">
+
             <TextView
                 android:layout_width="wrap_content"
-                android:text="Заметки"
-                android:layout_marginStart="150dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_start_140dp"
+                android:textSize="@dimen/text_size_20sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray"
+                android:text="@string/text_note" />
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

@@ -13,9 +13,16 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.geektech.mynote.R;
 import com.geektech.mynote.databinding.FragmentNoteBinding;
+import com.geektech.mynote.model.NoteModel;
+import com.geektech.mynote.utils.App;
 import com.geektech.mynote.utils.Constants;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class NoteFragment extends Fragment {
@@ -30,16 +37,29 @@ public class NoteFragment extends Fragment {
         return binding.getRoot();
     }
 
+    public String getDateConverter() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MMMM HH:mm");
+        Date date = new Date();
+        return formatter.format(date);
+    }
+
     private void initView() {
         binding.btnSave.setOnClickListener(v -> {
             String text = binding.editText.getText().toString().trim();
             if (TextUtils.isEmpty(text)) {
                 binding.editText.setError("Вы не правильно ввели");
+                YoYo.with(Techniques.RotateIn)
+                        .duration(700)
+                        .repeat(3)
+                        .playOn(binding.btnSave);
                 return;
             }
 
+            NoteModel noteModel = new NoteModel(text, getDateConverter());
+
+            App.getDatabase().getDao().insertNote(noteModel);
             Bundle bundle = new Bundle();
-            bundle.putString(Constants.BUNDLE_KEY, text);
+            bundle.putSerializable(Constants.BUNDLE_KEY, noteModel);
             getParentFragmentManager().setFragmentResult(Constants.REQUEST_KEY, bundle);
             close();
         });

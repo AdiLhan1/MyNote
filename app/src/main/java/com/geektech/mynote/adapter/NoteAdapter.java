@@ -8,17 +8,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geektech.mynote.databinding.NoteItemBinding;
+import com.geektech.mynote.model.NoteModel;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> {
-    ArrayList<String> list = new ArrayList<>();
+    ArrayList<NoteModel> list = new ArrayList<>();
     NoteItemBinding binding;
 
-    public void addText(String text) {
+    public void addNote(NoteModel text) {
         list.add(text);
+        notifyDataSetChanged();
+    }
+
+    public void addModel(List<NoteModel> models) {
+        list.clear();
+        list.addAll(models);
         notifyDataSetChanged();
     }
 
@@ -46,8 +54,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> 
             super(itemView);
         }
 
-        private void onBind(String s) {
-            binding.itemTitle.setText(s);
+        private void onBind(NoteModel s) {
+            binding.itemTitle.setText(s.getTitle());
         }
     }
 }

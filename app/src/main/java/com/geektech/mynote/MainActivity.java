@@ -1,7 +1,6 @@
 package com.geektech.mynote;
 
 import android.os.Bundle;
-import android.view.Menu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -11,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.geektech.mynote.databinding.ActivityMainBinding;
+import com.geektech.mynote.utils.PrefHelper;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        if (!PrefHelper.getOnBoardIsShown()) {
+            navController.navigate(R.id.onBoardFragment);
+            return;
+        }
+
         binding.appBarMain.fab.setOnClickListener(view -> {
             navController.navigate(R.id.noteFragment);
         });
@@ -48,17 +53,12 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (controller.getGraph().getStartDestination() == destination.getId()) {
                 binding.appBarMain.fab.show();
+            } else if (destination.getId() == R.id.onBoardFragment) {
+                binding.appBarMain.fab.hide();
             } else {
                 binding.appBarMain.fab.hide();
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
