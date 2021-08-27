@@ -12,6 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.geektech.mynote.databinding.ActivityMainBinding;
 import com.geektech.mynote.utils.PrefHelper;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            navController.navigate(R.id.authFragment);
+            return;
+        }
         if (!PrefHelper.getOnBoardIsShown()) {
             navController.navigate(R.id.onBoardFragment);
             return;

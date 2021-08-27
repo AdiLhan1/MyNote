@@ -24,6 +24,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder> 
         notifyDataSetChanged();
     }
 
+    public void deleteModel(int pos) {
+        list.remove(pos);
+        notifyItemRemoved(pos);
+    }
+
     public void addModel(List<NoteModel> models) {
         list.clear();
         list.addAll(models);
